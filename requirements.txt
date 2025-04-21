@@ -1,0 +1,6 @@
+openai
+pinecone
+polars
+pymongo
+python-dateutil
+streamlit
