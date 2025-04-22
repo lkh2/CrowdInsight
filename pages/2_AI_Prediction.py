@@ -33,16 +33,20 @@ st.set_page_config(
 st.markdown(
     """
     <style>
+    
         [data-testid="stAppViewContainer"] {
             background: linear-gradient(180deg, #2A5D4E 0%, #65897F 50%, #2A5D4E 100%);
         }
+
         [data-testid="stHeader"] {
             background: transparent;
         }
+
         .st-key-make_another_prediction {
             margin: 0 auto;
             padding-bottom: 40px;
         }
+
         button[data-testid="stBaseButton-primary"] {
             padding: 12px 45px !important;
             background: linear-gradient(90deg, #5cb85c 0%, #65c3a1 100%) !important;
@@ -67,19 +71,23 @@ st.markdown(
             max-width: 900px; 
             margin: 40px auto; 
         }
+
         .prediction-result-container.loaded {
             opacity: 1; 
         }
+
         .prediction-result-content {
             text-align: center;
             color: #f0f0f0;
         }
+
         .success-rate-label {
             font-size: 18px;
             font-weight: 500;
             color: #cccccc;
             margin-bottom: 10px;
         }
+
         .success-rate-value {
             font-family: 'Playfair Display', serif;
             font-size: 64px;
@@ -111,6 +119,7 @@ st.markdown(
             border-top: none !important;
             padding-top: 0 !important;
         }
+
         .ai-suggestions div[data-testid="stHeadingWithActionElements"] h3 {
             font-family: 'Poppins', sans-serif !important;
             color: #e8e8e8 !important;
@@ -133,6 +142,7 @@ st.markdown(
             line-height: 1.7;
             color: #ffffff;
         }
+
         .ai-suggestions table {
             width: 100%;
             border-collapse: collapse;
@@ -144,6 +154,7 @@ st.markdown(
             box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
             color: #333333;
         }
+
         .ai-suggestions th,
         .ai-suggestions td {
             padding: 12px 18px;
@@ -153,6 +164,7 @@ st.markdown(
             vertical-align: middle;
             color: #333333;
         }
+
         .ai-suggestions thead th {
             background-color: #f8f9fa;
             color: #212529;
@@ -162,19 +174,23 @@ st.markdown(
             letter-spacing: 0.5px;
             border-bottom: 2px solid #dee2e6;
         }
+
         .ai-suggestions tbody tr:last-child th,
         .ai-suggestions tbody tr:last-child td {
             border-bottom: none;
         }
+
         .ai-suggestions tbody tr:hover {
             background-color: #f1f1f1;
         }
+
         .ai-suggestions ul {
             list-style-type: none; 
             padding-left: 10px; 
             margin-top: 15px;
             margin-bottom: 25px;
         }
+
         .ai-suggestions li {
             margin-bottom: 12px;
             padding-left: 25px; 
@@ -182,6 +198,7 @@ st.markdown(
             line-height: 1.6;
             color: #ffffff;
         }
+
         .ai-suggestions li::before { 
             content: '•';
             color: #65c3a1; 
@@ -191,11 +208,22 @@ st.markdown(
             top: 0px; 
             line-height: 1;
         }
+
         .ai-suggestions strong {
             color: #ffffff;
             font-weight: 700;
             border-bottom: 1.5px solid rgba(255, 255, 255, 0.7);
             padding-bottom: 1px;
+        }
+
+        .ai-suggestions div[data-testid="stHeadingWithActionElements"] a {
+            display: none; 
+        }
+
+        .stSpinner {
+            justify-self: center !important; 
+            color: white !important;      
+            margin-top: 10px; 
         }
 
         @media (max-width: 768px) {
@@ -219,9 +247,6 @@ st.markdown(
              .ai-suggestions li::before { font-size: 15px; }
          }
 
-        .ai-suggestions div[data-testid="stHeadingWithActionElements"] a {
-            display: none; /* This rule hides Streamlit's default anchor links in headings */
-        }
     </style>
     """,
     unsafe_allow_html=True
