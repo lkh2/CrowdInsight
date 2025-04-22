@@ -228,7 +228,7 @@ Your response MUST be **ONLY valid HTML structure snippets**. Absolutely **NO Ma
 <p>[Provide a fixed explanation: "SHAP (SHapley Additive exPlanations) values explain model predictions. Each feature's SHAP value shows its contribution (positive or negative) to the prediction compared to the average. Higher absolute values mean greater importance."]</p>
 
 <h3>Top 10 Contributing Features for Your Campaign</h3>
-<p>[Present the top 10 SHAP values ({top_ten_sorted_features}) specific to *this campaign* in a standard HTML table. Use `<thead>` for headers ('Feature', 'SHAP Value', 'Impact') and `<tbody>` for data rows. Calculate 'Impact' as 'Positive' (SHAP > 0) or 'Negative' (SHAP < 0). Ensure numerical SHAP values are displayed clearly.]</p>
+<p>[Present the top 10 SHAP values ({top_ten_sorted_features}) specific to *this campaign* in a standard HTML table. Use `<thead>` for headers ('Feature', 'SHAP Value', 'Impact', 'Average') and `<tbody>` for data rows. Calculate 'Impact' as 'Positive' (SHAP > 0) or 'Negative' (SHAP < 0). Include the average SHAP value for each feature from 'Average SHAP Values' in the 'Average' column. Ensure numerical SHAP values are displayed clearly.]</p>
 <!-- Example HTML Table Structure: -->
 <table>
   <thead>
@@ -236,6 +236,7 @@ Your response MUST be **ONLY valid HTML structure snippets**. Absolutely **NO Ma
       <th>Feature</th>
       <th>SHAP Value</th>
       <th>Impact</th>
+      <th>Average</th>
     </tr>
   </thead>
   <tbody>
@@ -251,15 +252,35 @@ Your response MUST be **ONLY valid HTML structure snippets**. Absolutely **NO Ma
 
 <h3>Areas for Improvement (Based on Negative SHAP, Your Inputs, Similar Campaigns & Average SHAP)</h3>
 <ul>
+    <li>[**START WITH THE DESCRIPTION: Begin by directly analyzing specific elements of the user's raw description text from 'User's Submitted Campaign Details'. Quote 1-2 actual phrases or sentences from their description and provide concrete suggestions for improvement. For example: "Your opening sentence '[quote from user text]' could be strengthened by..." or "The section where you describe '[specific feature from their text]' would benefit from more detailed explanation of..."**]</li>
+    <li>[**Continue with 2-3 more specific recommendations about their description, each referencing actual content from their submitted text.** Consider clarity, emotional appeal, unique value proposition, addressing objections, and completeness. Be concrete and specific to their actual writing, not generic advice.]</li>
     <li>[Identify features with significant negative SHAP values from the table above.]</li>
     <li>[**Compare** the user's specific values (from 'User's Submitted Campaign Details') for these negative-impact, changeable features (e.g., funding goal, description clarity, risk clarity, media counts, duration) with the values/trends observed in the 'Similar Successful Campaigns' data. **Also, consider if this feature's negative impact is typical (based on 'Average SHAP Values') or particularly strong for this campaign.**]</li>
-    <li>[Provide **specific, actionable recommendations** as HTML list items (`<li>`). These recommendations **must be informed by both comparisons**. For example: `<li>Your funding goal of ${input_campaign_features.get('funding_goal', 'N/A')} appears high compared to similar successful campaigns ({similar_campaigns_summary_str}) and has a much stronger negative impact than average ({average_shap_means.get('funding_goal', 'N/A')}); evaluate if adjustment is feasible.</li>`, `<li>Improving description clarity is advisable; while yours is provided, successful campaigns often emphasize [X], and description quality generally influences success (Avg SHAP: {average_shap_means.get('description_embedding', 'N/A')}). Consider highlighting [Y].</li>`, `<li>Adding video (current: {input_campaign_features.get('video_count', 'N/A')}) could help, aligning with similar projects ({similar_campaigns_summary_str}) and potentially boosting impact (Avg SHAP: {average_shap_means.get('video_count', 'N/A')}).</li>`. **DO NOT suggest changing historical data**.]
+    <li>[Provide **specific, actionable recommendations** as HTML list items (`<li>`). These recommendations **must be informed by both comparisons**. For example: `<li>Your funding goal of ${input_campaign_features.get('funding_goal', 'N/A')} appears high compared to similar successful campaigns ({similar_campaigns_summary_str}) and has a much stronger negative impact than average ({average_shap_means.get('funding_goal', 'N/A')}); evaluate if adjustment is feasible.</li>`, `<li>Adding video (current: {input_campaign_features.get('video_count', 'N/A')}) could help, aligning with similar projects ({similar_campaigns_summary_str}) and potentially boosting impact (Avg SHAP: {average_shap_means.get('video_count', 'N/A')}).</li>`. **DO NOT suggest changing historical data**.]
 </ul>
 
 <h3>Strengths (Based on Positive SHAP, Your Inputs, Similar Campaigns & Average SHAP)</h3>
 <ul>
     <li>[Briefly acknowledge 1-2 key strengths as HTML list items (`<li>`) based on positive SHAP values, user inputs, and potentially noting alignment with similar campaigns or better-than-average SHAP impact. E.g., `<li>Your category choice '{input_campaign_features.get('raw_category', 'N/A')}' is a positive factor, typical for successful campaigns ({similar_campaigns_summary_str}) and contributes positively (Avg SHAP: {average_shap_means.get('category_embedding', 'N/A')}).</li>`, `<li>Your campaign duration ({input_campaign_features.get('campaign_duration', 'N/A')} days) appears appropriate, aligning with similar projects ({similar_campaigns_summary_str}) and having a relatively neutral average impact (Avg SHAP: {average_shap_means.get('campaign_duration', 'N/A')}).</li>`).]
 </ul>
+
+<h2>3. Disclaimer</h2>
+<p>The predictions and improvement suggestions provided by this platform are generated by a multimodal neural network trained on historical Kickstarter data. This model was trained using a binary cross-entropy loss function and evaluated primarily via ROC-AUC; as a result, it may produce more extreme probability estimates (i.e., values closer to 0 or 1) than actual campaign outcomes would warrant.</p>
+
+<h3>Model Performance</h3>
+<ul>
+    <li>Training set: around 16,000 campaigns</li>
+    <li>Validation set: around 2,000 campaigns</li>
+    <li>Test set: around 2,000 campaigns</li>
+    <li>Test accuracy: 90.24%</li>
+    <li>Test ROC-AUC: 0.9607</li>
+</ul>
+
+<h3>Interpretability Caveats</h3>
+<p>Feature attributions are computed using DeepSHAP, which approximates Shapley values based on a limited set of reference samples. These values can be biased—particularly when features are correlated or the reference set is not fully representative—and should be treated as rough indicators of feature importance rather than precise measurements.</p>
+
+<h3>Use as Guidance Only</h3>
+<p>All predictions and explanations are provided for informational purposes and should not be considered guarantees of campaign performance. Users are encouraged to combine these data-driven insights with their own market research, creative judgment, and qualitative factors when planning and refining their crowdfunding campaigns.</p>
 
 **Strict Formatting Rules:**
 *   **HTML ONLY:** Pure HTML fragments. No Markdown. No conversational text. Start *directly* with `<p>[Prediction Summary...]</p>`. No `<html>`, `<head>`, `<body>`.
